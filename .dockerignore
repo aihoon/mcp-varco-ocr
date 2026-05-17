@@ -1,0 +1,25 @@
+.git
+.idea
+.vscode
+__pycache__/        # __pycache__ cannot cover all types of *.pyc.
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+logs/
+.venv/
+venv/
+node_modules/
+dist/
+build/
+tmp/
+.env
+.env.docker
+deploy/.env.docker
+*.pyc
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+

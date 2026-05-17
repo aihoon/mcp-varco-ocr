@@ -6,19 +6,21 @@ name = "pypi"
 [[source]]
 url = "https://download.pytorch.org/whl/cu121"
 verify_ssl = true
-name = "pytorch"
+name = "pytorch-cu121"
 
 [packages]
-mcp = {extras = ["cli"], version = "*"}
-transformers = ">=4.53.1"
-pillow = "*"
-accelerate = "*"
+torch = {version = "==2.5.1", index = "pytorch-cu121"}
+torchvision = {version = "==0.20.1", index = "pytorch-cu121"}
+mcp = "==1.27.1"
 fastapi = "*"
-uvicorn = {extras = ["standard"], version = "*"}
-python-multipart = "*"
+uvicorn = "*"
+httpx = "*"
+pillow = "*"
+transformers = "*"
+accelerate = "*"
+black = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.11"
-python_full_version = "3.11.15"

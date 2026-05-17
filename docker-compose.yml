@@ -1,0 +1,48 @@
+services:
+  varco-ocr-rest:
+    build:
+      context: .
+    image: varco-ocr-rest:latest
+    container_name: varco-ocr-rest
+    command: ["python", "server.py", "--mode", "rest"]
+    ports:
+      - "8765:8765"
+    environment:
+      OCR_LOG_PATH: /app/logs/server.log
+      OCR_LOG_LEVEL: INFO
+      OCR_ARTIFACTS_DIR: /app/logs/artifacts
+      OCR_SAVE_INPUT_POLICY: on_error
+    volumes:
+      - ${HOST_LOG_DIR:-/home/aihoon/Workspace/mcp-varco-ocr/logs}:/app/logs
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  varco-ocr-mcp:
+    build:
+      context: .
+    image: varco-ocr-mcp:latest
+    container_name: varco-ocr-mcp
+    command: ["python", "server.py", "--mode", "mcp-http"]
+    ports:
+      - "8766:8766"
+    environment:
+      OCR_LOG_PATH: /app/logs/server.log
+      OCR_LOG_LEVEL: INFO
+      OCR_ARTIFACTS_DIR: /app/logs/artifacts
+      OCR_SAVE_INPUT_POLICY: on_error
+    volumes:
+      - ${HOST_LOG_DIR:-/home/aihoon/Workspace/mcp-varco-ocr/logs}:/app/logs
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
