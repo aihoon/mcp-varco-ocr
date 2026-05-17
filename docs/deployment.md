@@ -99,11 +99,13 @@ docker run --rm --gpus all nvidia/cuda:12.1.1-runtime-ubuntu22.04 nvidia-smi
 ./run_docker.sh mcp-http
 ```
 
-로그 경로를 변경하려면:
+`run_docker.sh`는 모드 인자만 받습니다:
 
 ```bash
-./run_docker.sh rest /custom/host/logs/path
+./run_docker.sh [rest|mcp-http]
 ```
+
+로그 경로는 스크립트 내부 기본값(`/home/aihoon/Workspace/mcp-varco-ocr/logs`)을 사용합니다.
 
 ---
 
@@ -198,6 +200,12 @@ lsof -iTCP:8766 -sTCP:LISTEN -n -P
 ./run_docker.sh mcp-http
 ```
 
+상태 확인:
+
+```bash
+docker compose ps
+```
+
 중지:
 
 ```bash
@@ -209,6 +217,15 @@ docker compose down
 ```bash
 docker compose up -d --build varco-ocr-rest
 docker compose up -d --build varco-ocr-mcp
+```
+
+로그 확인:
+
+```bash
+docker compose logs -f varco-ocr-rest
+docker compose logs -f varco-ocr-mcp
+tail -f /home/aihoon/Workspace/mcp-varco-ocr/logs/server.log
+find /home/aihoon/Workspace/mcp-varco-ocr/logs/artifacts -type f | tail -n 30
 ```
 
 컨테이너 내부 점검:
@@ -263,5 +280,5 @@ docker compose exec varco-ocr-rest sh -lc 'echo $OCR_LOG_PATH; ls -l /app/logs; 
 
 ## 12) 관련 문서
 
-- 상세 운영 체크리스트: `docs/deployment_tasks.md` #33
-- 기능/클라이언트 사용: `README.md` #33
+- 상세 운영 체크리스트: `docs/deployment_tasks.md`
+- 기능/클라이언트 사용: `README.md`
